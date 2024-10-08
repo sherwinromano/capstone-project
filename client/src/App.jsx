@@ -1,5 +1,21 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import AuthLayout from "./pages/Authentication/AuthLayout";
+import SignIn from "./pages/Authentication/SignIn";
+import SignUp from "./pages/Authentication/SignUp";
+import Recovery from "./pages/Authentication/Recovery";
+
 const App = () => {
-  return <h1 className="text-black text-[4rem]">Hello World</h1>;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/auth" element={<AuthLayout />}>
+          <Route path="sign-in" element={<SignIn />} />
+          <Route path="sign-up" element={<SignUp />} />
+          <Route path="account-recovery" element={<Recovery />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
 };
 
 export default App;

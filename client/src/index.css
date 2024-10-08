@@ -3,5 +3,15 @@
 @tailwind utilities;
 
 * {
-  font-family: "Poppins", sans-serif;
+  font-family: "Inter", sans-serif;
+}
+
+@layer components {
+  .input-style {
+    @apply bg-[#f2f2f2] border border-[#999999] outline-none p-2;
+  }
+
+  .input-submit-style {
+    @apply bg-[#3B9AB8] text-[14px] text-white font-bold cursor-pointer p-2 w-[35%];
+  }
 }
