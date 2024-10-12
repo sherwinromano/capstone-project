@@ -26,6 +26,40 @@ const SignUp = () => {
   const [validLastName, setValidLastName] = useState(false);
   const [validEmail, setValidEmail] = useState(false);
 
+  const courses = {
+    "COLLEGE OF EDUCATION, ARTS AND SCIENCES (COEd, AS)": [
+      "Bachelor of Elementary Education (BEED)",
+      "Bachelor of Secondary Education major in Math (BSED-Math)",
+      "Bachelor of Technology and Livelihood Education major in Home Economics (BTLEd)",
+      "Bachelor of Arts in English Language Studies (AB ELS)",
+      "Bachelor of Arts in Literature (AB Lit)",
+    ],
+    "COLLEGE OF TECHNOLOGY AND ENGINEERING (CoTE)": [
+      "Bachelor of Science in Industrial Engineering (BSIE)",
+      "Bachelor of Science in Information Technology (BSIT)",
+      "Bachelor in Industrial Technology (BIT) majors in:",
+      "Drafting Technology",
+      "Electronics Technology",
+      "Computer Technology",
+      "Garments Technology",
+      "Automotive Technology",
+    ],
+    "COLLEGE OF FORESTRY": [
+      "Bachelor of Science in Forestry (BSF)",
+    ],
+    "COLLEGE OF AGRICULTURE": [
+      "Bachelor of Science in Agriculture (BSA) majors in:",
+      "Animal Science",
+      "Horticulture",
+      "Agronomy",
+      "Crop Protection",
+      "Agricultural Economics",
+    ],
+    "COLLEGE OF HOSPITALITY MANAGEMENT AND TOURISM": [
+      "Bachelor of Science in Hospitality Management (BSHM)",
+    ],
+  };
+
   const handleCourseSelect = (course) => {
     setSelectedCourse(course);
     setShowModal(false);
@@ -192,46 +226,74 @@ const SignUp = () => {
         
         {/* Password Requirements Checkboxes */}
         <div className="flex flex-col mt-2">
-          <label className="flex items-center">
-            {passwordRequirements.length ? '✔' : '✖'} At least 8 characters
+          <label>
+            <input
+              type="checkbox"
+              checked={passwordRequirements.length}
+              readOnly
+            />
+            At least 8 characters
           </label>
-          <label className="flex items-center">
-            {passwordRequirements.lowercase ? '✔' : '✖'} At least one lowercase letter
+          <label>
+            <input
+              type="checkbox"
+              checked={passwordRequirements.lowercase}
+              readOnly
+            />
+            At least one lowercase letter
           </label>
-          <label className="flex items-center">
-            {passwordRequirements.uppercase ? '✔' : '✖'} At least one uppercase letter
+          <label>
+            <input
+              type="checkbox"
+              checked={passwordRequirements.uppercase}
+              readOnly
+            />
+            At least one uppercase letter
           </label>
-          <label className="flex items-center">
-            {passwordRequirements.number ? '✔' : '✖'} At least one number
+          <label>
+            <input
+              type="checkbox"
+              checked={passwordRequirements.number}
+              readOnly
+            />
+            At least one number
           </label>
-          <label className="flex items-center">
-            {passwordRequirements.specialChar ? '✔' : '✖'} At least one special character (!@#$%^&*)
+          <label>
+            <input
+              type="checkbox"
+              checked={passwordRequirements.specialChar}
+              readOnly
+            />
+            At least one special character
           </label>
         </div>
-        
-        <input
-          type="submit"
-          value="Sign Up"
-          className="bg-blue-500 text-white py-2 px-4 rounded"
-        />
+
+        <button className="mt-4 p-2 bg-blue-500 text-white rounded">
+          Sign Up
+        </button>
       </form>
 
-      {/* Modal for Course Selection */}
+      {/* Course Selection Modal */}
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg w-[20rem]">
+          <div className="bg-white p-6 rounded-lg w-[30rem]">
             <h3 className="font-bold mb-4">Select Your Course</h3>
             <div className="flex flex-col gap-2">
-              {["BSIT", "BTVTED", "BIT", "HM"].map((course) => (
-                <label key={course}>
-                  <input
-                    type="radio"
-                    name="course"
-                    value={course}
-                    onClick={() => handleCourseSelect(course)}
-                  />
-                  {course}
-                </label>
+              {Object.entries(courses).map(([college, courseList]) => (
+                <div key={college} className="mb-2">
+                  <h4 className="font-semibold">{college}</h4>
+                  {courseList.map((course, index) => (
+                    <label key={index} className="flex items-center">
+                      <input
+                        type="radio"
+                        name="course"
+                        value={course}
+                        onClick={() => handleCourseSelect(course)}
+                      />
+                      {course}
+                    </label>
+                  ))}
+                </div>
               ))}
             </div>
             <button
@@ -243,13 +305,6 @@ const SignUp = () => {
           </div>
         </div>
       )}
-      
-      <p className="text-[14px]">
-        Already have an account?{" "}
-        <Link className="underline" to="/auth/sign-in">
-          Sign In
-        </Link>
-      </p>
     </div>
   );
 };
