@@ -16,10 +16,22 @@ const SignIn = () => {
         </div>
       </div>
       <form className="flex flex-col gap-1 w-full">
-        <label htmlFor="email">Email</label>
-        <input className="input-style" type="email" />
+        <label htmlFor="userIdentifier">Email or ID Number</label>
+        <input
+          className="input-style"
+          type="text"
+          id="userIdentifier"
+          placeholder="Enter your email or ID number"
+        />
+
         <label htmlFor="password">Password</label>
-        <input className="input-style" type="password" />
+        <input
+          className="input-style"
+          type="password"
+          id="password"
+          placeholder="Enter your password" // Placeholder added here
+        />
+        
         <div className="mt-2 flex justify-between items-center">
           <input className="input-submit-style" type="submit" value="Sign In" />
           <Link className="text-[14px]" to="/auth/account-recovery">

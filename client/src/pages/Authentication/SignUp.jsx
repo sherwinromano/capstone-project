@@ -16,6 +16,15 @@ const SignUp = () => {
   });
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [middleInitial, setMiddleInitial] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+
+  const [validFirstName, setValidFirstName] = useState(false);
+  const [validMiddleInitial, setValidMiddleInitial] = useState(false);
+  const [validLastName, setValidLastName] = useState(false);
+  const [validEmail, setValidEmail] = useState(false);
 
   const handleCourseSelect = (course) => {
     setSelectedCourse(course);
@@ -59,6 +68,36 @@ const SignUp = () => {
     }
   };
 
+  const validateInput = (inputValue, setValid) => {
+    const isValid = /^[A-Za-z\s]*$/.test(inputValue);
+    setValid(isValid);
+    return isValid;
+  };
+
+  const handleFirstNameChange = (e) => {
+    const value = e.target.value;
+    setFirstName(value);
+    validateInput(value, setValidFirstName);
+  };
+
+  const handleMiddleInitialChange = (e) => {
+    const value = e.target.value;
+    setMiddleInitial(value);
+    validateInput(value, setValidMiddleInitial);
+  };
+
+  const handleLastNameChange = (e) => {
+    const value = e.target.value;
+    setLastName(value);
+    validateInput(value, setValidLastName);
+  };
+
+  const handleEmailChange = (e) => {
+    const value = e.target.value;
+    setEmail(value);
+    setValidEmail(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value)); // Regex for email validation
+  };
+
   return (
     <div className="flex flex-col gap-4 w-3/5">
       <div className="flex items-center gap-4">
@@ -75,16 +114,34 @@ const SignUp = () => {
       <h2 className="font-bold text-[1.3rem]">Sign Up</h2>
       <form className="flex flex-col gap-1">
         <div className="flex gap-2 w-full">
-          <div className="w-1/2">
+          <div className="w-1/3">
             <label htmlFor="firstName">First Name</label>
-            <input className="input-style w-full" type="text" />
+            <input
+              className={`input-style w-full ${validFirstName ? 'border-green-500' : 'border-red-500'}`}
+              type="text"
+              value={firstName}
+              onChange={handleFirstNameChange}
+            />
           </div>
-          <div className="w-1/2">
+          <div className="w-1/3">
+            <label htmlFor="middleInitial">Middle Initial</label>
+            <input
+              className={`input-style w-full ${validMiddleInitial ? 'border-green-500' : 'border-red-500'}`}
+              type="text"
+              value={middleInitial}
+              onChange={handleMiddleInitialChange}
+            />
+          </div>
+          <div className="w-1/3">
             <label htmlFor="lastName">Last Name</label>
-            <input className="input-style w-full" type="text" />
+            <input
+              className={`input-style w-full ${validLastName ? 'border-green-500' : 'border-red-500'}`}
+              type="text"
+              value={lastName}
+              onChange={handleLastNameChange}
+            />
           </div>
         </div>
-        {/* ID Number Field */}
         <div className="flex gap-2 w-full">
           <div className="w-full">
             <label htmlFor="idNumber">ID Number</label>
@@ -106,7 +163,15 @@ const SignUp = () => {
           </div>
         </div>
         <label htmlFor="email">Email</label>
-        <input className="input-style" type="email" />
+        <input
+          className={`input-style ${validEmail ? 'border-green-500' : 'border-red-500'}`}
+          type="email"
+          value={email}
+          onChange={handleEmailChange}
+        />
+        {passwordError && (
+          <p className="text-red-500 text-sm mt-1">{passwordError}</p>
+        )}
         <label htmlFor="password">Password</label>
         <input
           className="input-style"
@@ -114,10 +179,9 @@ const SignUp = () => {
           value={password}
           onChange={handlePasswordChange}
         />
-        {passwordError && (
-          <p className="text-red-500 text-sm mt-1">{passwordError}</p>
+        {confirmPasswordError && (
+          <p className="text-red-500 text-sm mt-1">{confirmPasswordError}</p>
         )}
-        {/* Confirm Password Field */}
         <label htmlFor="confirmPassword">Confirm Password</label>
         <input
           className="input-style"
@@ -125,66 +189,32 @@ const SignUp = () => {
           value={confirmPassword}
           onChange={handleConfirmPasswordChange}
         />
-        {confirmPasswordError && (
-          <p className="text-red-500 text-sm mt-1">{confirmPasswordError}</p>
-        )}
         
         {/* Password Requirements Checkboxes */}
         <div className="flex flex-col mt-2">
-          <label>
-            <input
-              type="checkbox"
-              checked={passwordRequirements.length}
-              readOnly
-            />
-            At least 8 characters
+          <label className="flex items-center">
+            {passwordRequirements.length ? '✔' : '✖'} At least 8 characters
           </label>
-          <label>
-            <input
-              type="checkbox"
-              checked={passwordRequirements.lowercase}
-              readOnly
-            />
-            At least one lowercase letter
+          <label className="flex items-center">
+            {passwordRequirements.lowercase ? '✔' : '✖'} At least one lowercase letter
           </label>
-          <label>
-            <input
-              type="checkbox"
-              checked={passwordRequirements.uppercase}
-              readOnly
-            />
-            At least one uppercase letter
+          <label className="flex items-center">
+            {passwordRequirements.uppercase ? '✔' : '✖'} At least one uppercase letter
           </label>
-          <label>
-            <input
-              type="checkbox"
-              checked={passwordRequirements.number}
-              readOnly
-            />
-            At least one number
+          <label className="flex items-center">
+            {passwordRequirements.number ? '✔' : '✖'} At least one number
           </label>
-          <label>
-            <input
-              type="checkbox"
-              checked={passwordRequirements.specialChar}
-              readOnly
-            />
-            At least one special character (!@#$%^&*)
+          <label className="flex items-center">
+            {passwordRequirements.specialChar ? '✔' : '✖'} At least one special character (!@#$%^&*)
           </label>
         </div>
         
         <input
-          className="input-submit-style mt-4"
           type="submit"
           value="Sign Up"
+          className="bg-blue-500 text-white py-2 px-4 rounded"
         />
       </form>
-      <p className="text-[14px]">
-        Already have an account?{" "}
-        <Link className="underline" to="/auth/sign-in">
-          Sign In
-        </Link>
-      </p>
 
       {/* Modal for Course Selection */}
       {showModal && (
@@ -192,42 +222,17 @@ const SignUp = () => {
           <div className="bg-white p-6 rounded-lg w-[20rem]">
             <h3 className="font-bold mb-4">Select Your Course</h3>
             <div className="flex flex-col gap-2">
-              <label>
-                <input
-                  type="radio"
-                  name="course"
-                  value="BSIT"
-                  onClick={() => handleCourseSelect("BSIT")}
-                />
-                BSIT
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="course"
-                  value="BEED"
-                  onClick={() => handleCourseSelect("BEED")}
-                />
-                BEED
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="course"
-                  value="BTLed"
-                  onClick={() => handleCourseSelect("BTLed")}
-                />
-                BTLed
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="course"
-                  value="IE"
-                  onClick={() => handleCourseSelect("IE")}
-                />
-                IE
-              </label>
+              {["BSIT", "BTVTED", "BIT", "HM"].map((course) => (
+                <label key={course}>
+                  <input
+                    type="radio"
+                    name="course"
+                    value={course}
+                    onClick={() => handleCourseSelect(course)}
+                  />
+                  {course}
+                </label>
+              ))}
             </div>
             <button
               className="mt-4 p-2 bg-blue-500 text-white rounded"
@@ -238,6 +243,13 @@ const SignUp = () => {
           </div>
         </div>
       )}
+      
+      <p className="text-[14px]">
+        Already have an account?{" "}
+        <Link className="underline" to="/auth/sign-in">
+          Sign In
+        </Link>
+      </p>
     </div>
   );
 };
