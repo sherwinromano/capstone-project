@@ -151,7 +151,7 @@ const SignUp = () => {
           <div className="w-1/3">
             <label htmlFor="firstName">First Name</label>
             <input
-              className={`input-style w-full ${validFirstName ? 'border-green-500' : 'border-red-500'}`}
+              className={`input-style w-full ${firstName === '' ? '' : validFirstName ? 'border-green-500' : 'border-red-500'}`}
               type="text"
               value={firstName}
               onChange={handleFirstNameChange}
@@ -160,7 +160,7 @@ const SignUp = () => {
           <div className="w-1/3">
             <label htmlFor="middleInitial">Middle Initial</label>
             <input
-              className={`input-style w-full ${validMiddleInitial ? 'border-green-500' : 'border-red-500'}`}
+              className={`input-style w-full ${middleInitial === '' ? '' : validMiddleInitial ? 'border-green-500' : 'border-red-500'}`}
               type="text"
               value={middleInitial}
               onChange={handleMiddleInitialChange}
@@ -169,7 +169,7 @@ const SignUp = () => {
           <div className="w-1/3">
             <label htmlFor="lastName">Last Name</label>
             <input
-              className={`input-style w-full ${validLastName ? 'border-green-500' : 'border-red-500'}`}
+              className={`input-style w-full ${lastName === '' ? '' : validLastName ? 'border-green-500' : 'border-red-500'}`}
               type="text"
               value={lastName}
               onChange={handleLastNameChange}
@@ -198,7 +198,7 @@ const SignUp = () => {
         </div>
         <label htmlFor="email">Email</label>
         <input
-          className={`input-style ${validEmail ? 'border-green-500' : 'border-red-500'}`}
+          className={`input-style ${email === '' ? '' : validEmail ? 'border-green-500' : 'border-red-500'}`}
           type="email"
           value={email}
           onChange={handleEmailChange}
@@ -208,7 +208,7 @@ const SignUp = () => {
         )}
         <label htmlFor="password">Password</label>
         <input
-          className="input-style"
+          className={`input-style ${password === '' ? '' : passwordError ? 'border-red-500' : 'border-green-500'}`}
           type="password"
           value={password}
           onChange={handlePasswordChange}
@@ -218,7 +218,7 @@ const SignUp = () => {
         )}
         <label htmlFor="confirmPassword">Confirm Password</label>
         <input
-          className="input-style"
+          className={`input-style ${confirmPassword === '' ? '' : confirmPasswordError ? 'border-red-500' : 'border-green-500'}`}
           type="password"
           value={confirmPassword}
           onChange={handleConfirmPasswordChange}
