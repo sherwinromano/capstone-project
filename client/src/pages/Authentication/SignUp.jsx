@@ -116,7 +116,10 @@ const SignUp = () => {
   const handleMiddleInitialChange = (e) => {
     const value = e.target.value;
     setMiddleInitial(value);
-    validateInput(value, setValidMiddleInitial);
+    // Restricting input to one character
+    if (value.length <= 1) {
+      validateInput(value, setValidMiddleInitial);
+    }
   };
 
   const handleLastNameChange = (e) => {
@@ -154,15 +157,18 @@ const SignUp = () => {
               type="text"
               value={firstName}
               onChange={handleFirstNameChange}
+              placeholder="Enter your first name" // Placeholder added
             />
           </div>
           <div className="w-1/3">
-            <label htmlFor="middleInitial">Middle Initial</label>
+            <label htmlFor="middleInitial">MI</label>
             <input
               className={`input-style w-full ${middleInitial === '' ? '' : validMiddleInitial ? 'border-green-500' : 'border-red-500'}`}
               type="text"
               value={middleInitial}
               onChange={handleMiddleInitialChange}
+              maxLength={1} // Limit to one character
+              placeholder="M" // Optional placeholder for clarity
             />
           </div>
           <div className="w-1/3">
@@ -172,13 +178,18 @@ const SignUp = () => {
               type="text"
               value={lastName}
               onChange={handleLastNameChange}
+              placeholder="Enter your last name" // Placeholder added
             />
           </div>
         </div>
         <div className="flex gap-2 w-full">
           <div className="w-full">
             <label htmlFor="idNumber">ID Number</label>
-            <input className="input-style w-full" type="text" />
+            <input
+              className="input-style w-full"
+              type="text"
+              placeholder="Enter your ID number" // Placeholder added
+            />
           </div>
         </div>
         {/* Course Selection Field */}
@@ -191,7 +202,7 @@ const SignUp = () => {
               value={selectedCourse}
               readOnly
               onClick={() => setShowModal(true)}
-              placeholder="Select Course"
+              placeholder="Select Course" // Placeholder added
             />
           </div>
         </div>
@@ -201,6 +212,7 @@ const SignUp = () => {
           type="email"
           value={email}
           onChange={handleEmailChange}
+          placeholder="Enter your email" // Placeholder added
         />
         {passwordError && (
           <p className="text-red-500 text-sm mt-1">{passwordError}</p>
@@ -211,6 +223,7 @@ const SignUp = () => {
           type="password"
           value={password}
           onChange={handlePasswordChange}
+          placeholder="Create a password" // Placeholder added
         />
         {confirmPasswordError && (
           <p className="text-red-500 text-sm mt-1">{confirmPasswordError}</p>
@@ -221,6 +234,7 @@ const SignUp = () => {
           type="password"
           value={confirmPassword}
           onChange={handleConfirmPasswordChange}
+          placeholder="Re-enter your password" // Placeholder added
         />
         
         {/* Password Requirements Check Marks */}
@@ -280,9 +294,9 @@ const SignUp = () => {
         </div>
       )}
       <p className="text-[14px]">
-        Don't have an account?{" "}
-        <Link className="underline" to="/auth/sign-up">
-          Sign Up
+        Already have an account?{" "}
+        <Link className="underline" to="/auth/sign-in">
+          Sign In
         </Link>
       </p>
     </div>
