@@ -305,6 +305,12 @@ const SignUp = () => {
           </div>
         </div>
       )}
+      <p className="text-[14px]">
+        Don't have an account?{" "}
+        <Link className="underline" to="/auth/sign-up">
+          Sign Up
+        </Link>
+      </p>
     </div>
   );
 };
