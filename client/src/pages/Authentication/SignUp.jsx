@@ -168,7 +168,7 @@ const SignUp = () => {
               value={middleInitial}
               onChange={handleMiddleInitialChange}
               maxLength={1} // Limit to one character
-              placeholder="M" // Optional placeholder for clarity
+              placeholder="M.I" // Optional placeholder for clarity
             />
           </div>
           <div className="w-1/3">
