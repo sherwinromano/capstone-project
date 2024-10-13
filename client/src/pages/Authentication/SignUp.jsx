@@ -76,7 +76,6 @@ const SignUp = () => {
 
     setPasswordRequirements(requirements);
 
-    // Set error message if any requirement is not met
     const errors = Object.keys(requirements).filter((key) => !requirements[key]);
     setPasswordError(errors.length ? `Password must include: ${errors.join(", ")}` : "");
   };
@@ -224,48 +223,23 @@ const SignUp = () => {
           onChange={handleConfirmPasswordChange}
         />
         
-        {/* Password Requirements Checkboxes */}
+        {/* Password Requirements Check Marks */}
         <div className="flex flex-col mt-2">
-          <label>
-            <input
-              type="checkbox"
-              checked={passwordRequirements.length}
-              readOnly
-            />
-            At least 8 characters
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              checked={passwordRequirements.lowercase}
-              readOnly
-            />
-            At least one lowercase letter
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              checked={passwordRequirements.uppercase}
-              readOnly
-            />
-            At least one uppercase letter
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              checked={passwordRequirements.number}
-              readOnly
-            />
-            At least one number
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              checked={passwordRequirements.specialChar}
-              readOnly
-            />
-            At least one special character
-          </label>
+          <p>
+            {passwordRequirements.length ? "✔" : "✖"} At least 8 characters
+          </p>
+          <p>
+            {passwordRequirements.lowercase ? "✔" : "✖"} At least one lowercase letter
+          </p>
+          <p>
+            {passwordRequirements.uppercase ? "✔" : "✖"} At least one uppercase letter
+          </p>
+          <p>
+            {passwordRequirements.number ? "✔" : "✖"} At least one number
+          </p>
+          <p>
+            {passwordRequirements.specialChar ? "✔" : "✖"} At least one special character
+          </p>
         </div>
 
         <button className="mt-4 p-2 bg-blue-500 text-white rounded">
